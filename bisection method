@@ -1,0 +1,36 @@
+//Bisection
+#include<stdio.h>
+#include<math.h>
+float func(float x){
+    return x*log10(x)-1.2;
+}
+int main(){
+    printf("For Equation xlog(x)-1.2\n");
+    float a,b,x,error;
+    int i=0;
+    do{
+        if(i==0){
+            printf("Enter the interval: ");
+            scanf("%f%f",&a,&b);
+        }
+        if(func(a)*func(b)<0 && i==0){
+            printf("Root lies between %f and %f\n",a,b);
+            printf("Enter the allowed error: ");
+            scanf("%f",&error);
+        }
+        else if(func(a)*func(b)>0 || a==0 || b==0){
+            printf("Enter the valid interval\n");
+            continue;
+        }
+        i++;
+        x=0.5*(a+b);
+        printf("%d Iteration for %f and %f ,the value of x is %f\n",i,a,b,x);
+        if(func(a)*func(x) < 0){
+            b=x;
+        }
+        else{
+            a=x;
+        }
+    }while(fabs(func(x))>error);
+    printf("Final Root is %f\n",x);
+}
