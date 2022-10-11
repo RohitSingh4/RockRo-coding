@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<math.h>
+float func(float x)
+{
+    return ((x*x*x)-(5*x)+1);
+}
+int main()
+{
+    float a ,b,allowed_error,x;
+    printf("Enter the value of a and b: ");
+    scanf("%f%f",&a,&b);
+    if(func(a)*func(b)<0)
+    {
+        printf("Root lies between %f and %f .",a,b);
+        printf("\nEnter allowed Error : ");
+        scanf("%f",&allowed_error);
+        int i=1;
+        x=a-((b-a)/(func(b)-func(a)))*func(a);
+        while(fabs(func(x))>allowed_error)
+        {
+           x=a-((b-a)/(func(b)-func(a)))*func(a);
+            printf("\n %d iteration for %f and %f ,the value of x is : %f",i,a,b,x);
+            if(fabs(func(x))<allowed_error)
+            {
+               printf("\nRoots Found at: %f",x);
+            }
+            else if(func(a)*func(x)<0)
+               b=x;
+            else if(func(x)*func(b)<0)
+               a=x;
+            i++;
+        }
+    }
+    else
+    {
+        printf("Invalid Inputs. \n Enter values again : ");
+    }
+    return 0;
+}
