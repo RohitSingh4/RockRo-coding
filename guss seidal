@@ -1,0 +1,89 @@
+//gauss seidel
+
+#include<stdio.h>
+#include<math.h>
+#include<stdbool.h>
+
+float a[5][5];
+
+float X1(float x2,float x3,int n){
+    return((a[0][n]- x2-2*(x3))/10);
+}
+float X2(float x1,float x3,int n)
+{
+    return((a[1][n] - 2*(x1) - (x3))/10);
+}
+float X3(float x1,float x2,int n) 
+{
+    return((a[2][n]- x1- 2*(x2))/10);
+}
+int n;
+bool check()
+{
+    for(int i=0;i<n;i++)
+    {
+        float s=0;
+        for(int j=0;j<n;j++)
+        {
+            if(i!=j)
+            s+=a[i][j];
+        }
+        if(fabs(a[i][i])>=s)
+            continue;
+        else
+            return false;
+    } 
+    return true;
+}
+int main()
+{
+    float er,x1=0,x2=0,x3=0,y1,y2,y3;
+    int flag=0,it=1;
+    printf("Enter the number of rows: ");
+    scanf("%d",&n);
+    a[n][n+1];
+    
+    printf("Enter the matrix:\n");
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n+1;j++)
+        {
+            scanf("%f",&a[i][j]);
+        }
+        
+    } 
+    if(!check())
+    {
+        printf("The Coefficient matrix is not Diagnol Dominant!!! Plaese Try Again\n");
+        
+    }
+    else
+    {
+       
+        printf("Enter the allowed error: ");
+        scanf("%f",&er);
+        do
+        {
+            y1=X1(x2,x3,n);
+            y2=X2(y1,x3,n);
+            y3=X3(y1,y2,n);
+            if(fabs(y1-x1)<er && fabs(y2-x2)<er && fabs(y3-x3)<er)
+            {
+                break;
+                flag=1;
+            } 
+            else{
+                x1=y1;
+                x2=y2;
+                x3=y3;
+                printf("%d Approximation The values of unknowns are:\n",it);
+                printf("x1: %6.4f   x2: %6.4f   x3: %6.4f  \n",x1,x2,x3);
+            }
+            it++;
+        } while (flag!=1);
+
+        printf("\nThe solution are:\nx1: %6.4f\nx2: %6.4f\nx3: %6.4f\n",round(x1),round(x2),round(x3));
+        
+    }
+    return 0;
+}
