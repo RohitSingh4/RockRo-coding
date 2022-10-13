@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<unistd.h>
+int main ()
+{
+int a[10]={12,2,4,6,5,8,97,35,54,31};
+int se=0,so=0;
+int x=fork ();
+if(x!=0)
+{
+for(int i=0;i<10;i++)
+{
+if(a[i]%2!=0)
+so = so + a[i];
+}
+printf("Process Id of parent: %d has calculated the sum: %d\n", getpid(),so);
+ }
+else
+{
+for(int i=0;i<10;i++)
+{
+if(a[i] % 2 == 0)
+se = se +a[i];
+}
+printf("Process Id of child: %d has calculated the sum: %d\n" ,getpid(),se);
+}
+return 0;
+}
